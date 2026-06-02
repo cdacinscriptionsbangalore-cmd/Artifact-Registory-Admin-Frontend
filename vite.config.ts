@@ -14,6 +14,7 @@ const dirname =
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const backendProxyTarget = env.VITE_BACKEND_BASE_URL || 'https://inscriptions.cdacb.in'
+  const backendProxySecure = env.VITE_BACKEND_PROXY_SECURE !== 'false'
 
   return {
     base: '/admin',
@@ -29,17 +30,17 @@ export default defineConfig(({ mode }) => {
         '/api': {
           target: backendProxyTarget,
           changeOrigin: true,
-          secure: true,
+          secure: backendProxySecure,
         },
         '/detect': {
           target: backendProxyTarget,
           changeOrigin: true,
-          secure: true,
+          secure: backendProxySecure,
         },
         '/n8n': {
           target: backendProxyTarget,
           changeOrigin: true,
-          secure: true,
+          secure: backendProxySecure,
         },
       },
     },

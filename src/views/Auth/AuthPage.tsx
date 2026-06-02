@@ -26,7 +26,7 @@ const AuthPage: React.FC = () => {
     if (from.startsWith('/') && !from.startsWith('//')) {
       return from
     }
-
+    console.log('From getSafeRedirectPath:', { next, from })
     return null
   }
 
