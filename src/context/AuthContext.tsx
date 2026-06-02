@@ -9,7 +9,7 @@ import { setPostLoginRedirect } from '@/utils/postLoginRedirect'
 type AuthContextType = {
   isAuthenticated: boolean
   isLoading: boolean
-  loginSuccess: (token: string) => void
+  loginSuccess: (token: string) => boolean
   logout: () => Promise<boolean>
 }
 
@@ -83,7 +83,11 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
   )
 
   const loginSuccess = (token: string) => {
-    authStore.setToken(token)
+    if (!authStore.setToken(token)) {
+      setIsAuthenticated(false)
+      return false
+    }
+
     hasLoginSucceededRef.current = true
     hasForcedLogoutRef.current = false
     console.log('Token received in AuthContext:', token)
@@ -96,6 +100,7 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
       }
     }
     setIsAuthenticated(true)
+    return true
   }
 
   const logout = async () => {
