@@ -35,5 +35,12 @@ export const coreBackendClient = <T>(url: string, options: RequestInit = {}): Pr
     ...config,
     url,
     data: body,
-  }).then((response) => response.data)
+  }).then(
+    (response) =>
+      ({
+        data: response.data?.data ?? response.data,
+        status: response.status,
+        headers: response.headers,
+      }) as T
+  )
 }
