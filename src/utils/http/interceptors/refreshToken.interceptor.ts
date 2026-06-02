@@ -83,7 +83,7 @@ export const refreshTokenInterceptor = (client: AxiosInstance) => {
           try {
             window.dispatchEvent(new CustomEvent('app:unauthorized'))
           } catch {
-            window.location.href = '/login'
+            window.location.href = '/admin/login'
           }
           return Promise.reject(refreshError)
         } finally {

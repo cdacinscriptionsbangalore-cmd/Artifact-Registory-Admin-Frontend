@@ -2,7 +2,7 @@ import { ModerationReportActionTaken, ModerationReportStatus } from '@/api/model
 import type { ModerationReport } from '@/api/models'
 import type { ModerationAction, Report } from '@/shared/types/report'
 
-export const isOnline = false
+export const isOnline = true
 export const forceOnlineWithoutAuth = true
 
 export const reasonFilterMap = {

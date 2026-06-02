@@ -10,7 +10,7 @@ export const errorInterceptor = (client: AxiosInstance) => {
           window.dispatchEvent(new CustomEvent('app:unauthorized'))
         } catch {
           // fallback to hard navigation if CustomEvent is not supported
-          window.location.href = '/login'
+          window.location.href = '/admin/login'
         }
       }
       return Promise.reject(error)

@@ -16,8 +16,8 @@ declare global {
 
 const backendApiUrl =
   (typeof window !== 'undefined' && window._env_?.VITE_BACKEND_API_URL) ||
-  (typeof process !== 'undefined' && process.env.VITE_BACKEND_API_URL) ||
-  ''
+  import.meta.env.VITE_BACKEND_API_URL ||
+  '/api/'
 
 // The Axios instance — used internally
 const axiosInstance = createAxiosClient(backendApiUrl, [
