@@ -75,7 +75,7 @@ const LoginPage = () => {
     }
 
     if (sidebarStatusFilter === 'escalated') {
-      return { status: GetReportsStatus.ESCALATED }
+      return undefined
     }
 
     return undefined
