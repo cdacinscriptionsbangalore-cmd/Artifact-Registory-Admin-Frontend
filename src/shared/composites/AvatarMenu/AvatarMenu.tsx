@@ -15,7 +15,6 @@ import {
 import { useTheme } from '@/shared/theme'
 import { Button } from '@/shared/primitives/Button'
 import { useToast } from '@/hooks/useToast'
-import { NavLink } from 'react-router-dom'
 
 export interface AvatarMenuProps {
   name: string
@@ -28,7 +27,7 @@ export interface AvatarMenuProps {
 
   onSecurity?: () => void
 
-  onLogout?: () => void
+  onLogout?: () => void | Promise<void | boolean>
 }
 
 export function AvatarMenu({

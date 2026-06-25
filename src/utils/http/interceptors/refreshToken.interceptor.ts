@@ -61,7 +61,9 @@ export const refreshTokenInterceptor = (client: AxiosInstance) => {
             throw new Error('No access token in refresh response')
           }
 
-          authStore.setToken(newAccessToken)
+          if (!authStore.setToken(newAccessToken)) {
+            throw new Error('Refreshed token does not grant admin access')
+          }
           console.log(
             'Token refreshed in refreshToken.interceptor:',
             newAccessToken,
@@ -83,7 +85,7 @@ export const refreshTokenInterceptor = (client: AxiosInstance) => {
           try {
             window.dispatchEvent(new CustomEvent('app:unauthorized'))
           } catch {
-            window.location.href = '/login'
+            window.location.href = '/admin/login'
           }
           return Promise.reject(refreshError)
         } finally {

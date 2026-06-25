@@ -1,5 +1,4 @@
 // src/utils/http/clients/coreBackend.client.ts
-import type { AxiosRequestConfig } from 'axios'
 import { createAxiosClient } from '../axiosFactory'
 import { attachAuthToken } from '../interceptors/authRequest.interceptor'
 import { errorInterceptor } from '../interceptors/error.interceptor'
@@ -16,8 +15,8 @@ declare global {
 
 const backendApiUrl =
   (typeof window !== 'undefined' && window._env_?.VITE_BACKEND_API_URL) ||
-  (typeof process !== 'undefined' && process.env.VITE_BACKEND_API_URL) ||
-  ''
+  import.meta.env.VITE_BACKEND_API_URL ||
+  '/api/'
 
 // The Axios instance — used internally
 const axiosInstance = createAxiosClient(backendApiUrl, [
@@ -29,6 +28,19 @@ const axiosInstance = createAxiosClient(backendApiUrl, [
 
 // ← This is what Orval needs — a callable function that wraps the instance
 // Orval calls this for every generated API request
-export const coreBackendClient = <T>(config: AxiosRequestConfig): Promise<T> => {
-  return axiosInstance(config).then((response) => response.data)
+export const coreBackendClient = <T>(url: string, options: RequestInit = {}): Promise<T> => {
+  const { body, ...config } = options
+
+  return axiosInstance({
+    ...config,
+    url,
+    data: body,
+  }).then(
+    (response) =>
+      ({
+        data: response.data?.data ?? response.data,
+        status: response.status,
+        headers: response.headers,
+      }) as T
+  )
 }

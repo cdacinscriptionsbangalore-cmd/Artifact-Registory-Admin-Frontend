@@ -2,7 +2,7 @@ import { ModerationReportActionTaken, ModerationReportStatus } from '@/api/model
 import type { ModerationReport } from '@/api/models'
 import type { ModerationAction, Report } from '@/shared/types/report'
 
-export const isOnline = false
+export const isOnline = true
 export const forceOnlineWithoutAuth = true
 
 export const reasonFilterMap = {
@@ -65,6 +65,10 @@ const toTitleCase = (value: string) =>
     .join(' ')
 
 const mapStatus = (report: ModerationReport): Report['status'] => {
+  if (report.actionTaken === ModerationReportActionTaken.ESCALATE) {
+    return 'ESCALATED_TO_HUMAN'
+  }
+
   if (
     report.status === ModerationReportStatus.RESOLVED &&
     report.actionTaken === ModerationReportActionTaken.DISMISS
@@ -75,8 +79,10 @@ const mapStatus = (report: ModerationReport): Report['status'] => {
   switch (report.status) {
     case ModerationReportStatus.ESCALATED:
       return 'ESCALATED_TO_HUMAN'
+
     case ModerationReportStatus.RESOLVED:
       return 'RESOLVED'
+
     case ModerationReportStatus.AI_SCREENING:
     case ModerationReportStatus.PENDING:
     default:

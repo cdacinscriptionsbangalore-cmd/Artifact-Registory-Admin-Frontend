@@ -65,7 +65,9 @@ const OAuthCallback = () => {
         }
 
         if (accessToken) {
-          loginSuccess(accessToken)
+          if (!loginSuccess(accessToken)) {
+            throw new Error('This account does not have admin access')
+          }
 
           const savedRedirect = getPostLoginRedirect()
 

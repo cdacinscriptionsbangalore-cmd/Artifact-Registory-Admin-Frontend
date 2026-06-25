@@ -31,9 +31,9 @@ import BottomNav from '@/shared/composites/BottomNav/BottomNav'
 import {
   CheckIcon,
   ExclamationTriangleIcon,
-  PresentationChartLineIcon,
   QueueListIcon,
-  UsersIcon,
+  // PresentationChartLineIcon,
+  // UsersIcon,
 } from '@heroicons/react/24/outline'
 
 import HistoryIcon from '@/shared/illustrations/HistoryIcon'
@@ -87,21 +87,21 @@ const navItems = [
     badgeVariant: 'danger' as const,
   },
 
-  {
-    label: 'Users',
+  // {
+  //   label: 'Users',
 
-    route: '/users',
+  //   route: '/users',
 
-    icon: <UsersIcon className="size-4" />,
-  },
+  //   icon: <UsersIcon className="size-4" />,
+  // },
 
-  {
-    label: 'Analytics',
+  // {
+  //   label: 'Analytics',
 
-    route: '/analytics',
+  //   route: '/analytics',
 
-    icon: <PresentationChartLineIcon className="size-4" />,
-  },
+  //   icon: <PresentationChartLineIcon className="size-4" />,
+  // },
 ]
 
 export interface AdminLayoutOutletContext {
@@ -115,7 +115,7 @@ const AdminLayout = () => {
 
   const navigate = useNavigate()
 
-  const { isAuthenticated } = useContext(AuthContext)
+  const { isAuthenticated, logout } = useContext(AuthContext)
 
   const [collapsed, setCollapsed] = useState(false)
 
@@ -279,7 +279,7 @@ const AdminLayout = () => {
           searchPlaceholder="Search reports..."
           searchValue={searchQuery}
           onSearch={handleSearch}
-          actionsSlot={<AvatarMenu name="Admin Mod" />}
+          actionsSlot={<AvatarMenu name="Admin Mod" onLogout={logout} />}
         />
 
         <main className="p-6 pb-24 md:pb-6">
